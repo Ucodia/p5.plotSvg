@@ -162,10 +162,11 @@ Sets the radius for points (rendered as tiny circles) in the SVG output. Default
 
 ## beginSvgGroup
 Begins a user-defined grouping of SVG elements. If a group name is
-provided, later calls with the same name append new elements to that
-group even if it has been closed with `endSvgGroup()`. Calling the
-function without a name inserts an unnamed `<g>` element at the current
-drawing position. Always pair this with `endSvgGroup()`.
+provided, later calls with the same name append new elements to the
+existing group even after calling `endSvgGroup()`. Named groups may be
+nested inside unnamed groups. Calling the function without a name
+inserts an anonymous `<g>` element at the current drawing position.
+Always pair this with `endSvgGroup()`.
 
 #### Parameters
 *   `gname` **[string][27]?** Optional group name used as an ID for the SVG group.
@@ -173,10 +174,11 @@ drawing position. Always pair this with `endSvgGroup()`.
 
 
 ## endSvgGroup
-Ends the current user-defined group of SVG elements. When closing a
-named group this simply stops tagging subsequent commands with that
-group's ID. When closing an unnamed group it writes the closing `</g>`
-tag into the SVG output.
+Ends the most recently started SVG group. For named groups this
+releases the current association but does not finalize the group, so
+later calls to `beginSvgGroup` with the same name continue to append to
+it. When closing an unnamed group the corresponding `</g>` tag is
+written to the SVG output.
 
 
 
